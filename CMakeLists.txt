@@ -4,7 +4,7 @@
 # This silences a cmake warning about a variable name change
 set(CMAKE_POLICY_DEFAULT_CMP0022 OLD)
 
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 2.8.12)
 
 project(Csound)
 
