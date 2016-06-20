@@ -1,9 +1,3 @@
-# When the minimum required version is bumped to >= 2.8.12, remove this line,
-# remove all occurences of LINK_INTERFACE_LIBRARIES, and modify all target_link_libraries
-# to be PRIVATE (eg, target_link_libraries(${CSOUNDLIB} PRIVATE ...) )
-# This silences a cmake warning about a variable name change
-set(CMAKE_POLICY_DEFAULT_CMP0022 OLD)
-
 cmake_minimum_required(VERSION 2.8.12)
 
 project(Csound)
@@ -965,9 +959,6 @@ endif()
 
 add_library(${CSOUNDLIB} SHARED ${libcsound_SRCS})
 set_target_properties(${CSOUNDLIB} PROPERTIES
-    # Do not pull extra libs when linking against shared libcsound
-    # The shared library loader will do that for us
-    LINK_INTERFACE_LIBRARIES ""
     SOVERSION ${APIVERSION})
 
 
@@ -1243,7 +1234,7 @@ endif()
 
 
 add_compiler_flags(${libcsound_CFLAGS} TARGETS ${CSOUNDLIB})
-target_link_libraries(${CSOUNDLIB} ${libcsound_LIBS})
+target_link_libraries(${CSOUNDLIB} PRIVATE ${libcsound_LIBS})
 
 set_target_properties(${CSOUNDLIB} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BUILD_BIN_DIR}
