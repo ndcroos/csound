@@ -84,7 +84,6 @@ if(BUILD_PYTHON_INTERFACE OR BUILD_JAVA_INTERFACE OR BUILD_LUA_INTERFACE)
     set(CMAKE_SWIG_OUTDIR ${BUILD_LIB_DIR})
 
     if(BUILD_PYTHON_INTERFACE)
-        INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
         if(WIN32)
           if(NOT MSVC)
@@ -109,6 +108,7 @@ if(BUILD_PYTHON_INTERFACE OR BUILD_JAVA_INTERFACE OR BUILD_LUA_INTERFACE)
         SWIG_ADD_MODULE(csnd6 python python_interface.i)
         SWIG_LINK_LIBRARIES(csnd6 ${swigpython_LIBS})
 
+        target_include_directories(${SWIG_MODULE_csnd6_REAL_NAME} PRIVATE ${PYTHON_INCLUDE_PATH})
         set_target_properties(${SWIG_MODULE_csnd6_REAL_NAME} PROPERTIES
             RUNTIME_OUTPUT_DIRECTORY ${BUILD_LIB_DIR}
             LIBRARY_OUTPUT_DIRECTORY ${BUILD_LIB_DIR}
@@ -132,7 +132,6 @@ if(BUILD_PYTHON_INTERFACE OR BUILD_JAVA_INTERFACE OR BUILD_LUA_INTERFACE)
     if(BUILD_JAVA_INTERFACE)
         # The java package needs this unset or it will litter us with .java files
         unset(CMAKE_SWIG_OUTDIR)
-        INCLUDE_DIRECTORIES(${JNI_INCLUDE_DIRS})
 
        message(STATUS "JNI INCLUDE set to ${JNI_INCLUDE_DIRS}.")
 
@@ -161,6 +160,7 @@ if(BUILD_PYTHON_INTERFACE OR BUILD_JAVA_INTERFACE OR BUILD_LUA_INTERFACE)
 
         SWIG_ADD_MODULE(_jcsound6 java java_interface.i)
         SWIG_LINK_LIBRARIES(_jcsound6 ${swigjava_LIBS})
+        target_include_directories(${SWIG_MODULE__jcsound6_REAL_NAME} PRIVATE ${JNI_INCLUDE_DIRS})
 
         ADD_CUSTOM_COMMAND(TARGET _jcsound6
             POST_BUILD
@@ -197,7 +197,7 @@ if(BUILD_PYTHON_INTERFACE OR BUILD_JAVA_INTERFACE OR BUILD_LUA_INTERFACE)
         SWIG_ADD_MODULE(luaCsnd6 lua lua_interface.i)
         SWIG_LINK_LIBRARIES(luaCsnd6 ${swiglua_LIBS})
 
-        include_directories(${LUA_H_PATH})
+        target_include_directories(${SWIG_MODULE_luaCsnd6_REAL_NAME} PRIVATE ${LUA_H_PATH})
 
       	if(APPLE)
             set_target_properties(${SWIG_MODULE_luaCsnd6_REAL_NAME} PROPERTIES
