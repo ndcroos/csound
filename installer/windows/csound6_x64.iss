@@ -34,7 +34,7 @@
 ; Can run from the command line with "/S /D installation directory".
 ;
 ; Uncomment the following line to build CsoundVST and vst4cs:
-#define CSOUNDVST
+; #define CSOUNDVST
 
 #define MyAppName "Csound6_x64"
 #define MyAppVersion "6"
@@ -160,6 +160,7 @@ Source: "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\x64\Micro
 #include "csound_targets_and_dependencies.iss"
 
 ; Some targets not identified by "find_csound_dependencies.py."
+Source: "{#MySourceDir}/mingw64/csound64.lib"; DestDir: "{app}\lib"; Components: core;
 Source: "{#MySourceDir}frontends/nwjs/build/Release/csound.node"; DestDir: "{#APP_BIN}"; Components: core;
 Source: "{#MySourceDir}frontends/nwjs/build/Release/csound.pdb"; DestDir: "{#APP_BIN}"; Components: core;
 Source: "{#MyNwJsDir}*.*"; DestDir: "{#APP_BIN}\"; Flags: ignoreversion recursesubdirs;  Components: core
