@@ -547,6 +547,7 @@ PUBLIC void csoundCondSignal(void* condVar) {
 #elif defined(WIN32)
 #include <windows.h>
 #include <process.h>
+#include <synchapi.h>
 
 /* #undef NO_WIN9X_COMPATIBILITY */
 
