@@ -1,3 +1,22 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Gist
+ @gogins
+ Sign out
+ Unwatch 86
+  Star 387
+ Fork 74 csound/csound
+ Code  Issues 66  Pull requests 2  Projects 0  Wiki Insights
+Tree: ba279a0912 Find file Copy pathcsound/mingw64/find_csound_dependencies.py
+ba279a0  13 minutes ago
+@gogins gogins Fixes to exclude msvc built components from ldd scan for mingw64 buil…
+1 contributor
+RawBlameHistory
+165 lines (159 sloc)  5.76 KB
 #!python
 '''
 Run this script in the mingw64 shell to dynamically compile a list of
@@ -46,6 +65,8 @@ def exclude(filepath):
     if fnmatch.fnmatch(filepath, '''*/Windows/*'''):
         return True
     if fnmatch.fnmatch(filepath, '''*/csound-msvs/*'''):
+        return True
+    if fnmatch.fnmatch(filepath, '''*/msvc/deps/*'''):
         return True
     if fnmatch.fnmatch(filepath, '''*/???'''):
         return True
@@ -117,7 +138,7 @@ with open('mingw64/csound_ldd.txt', 'w') as f:
             for match in matches:
                 filepath = os.path.join(dirpath, match)
                 print 'filepath:', filepath
-                if filepath.find('Setup_Csound6_') == -1:
+                if (filepath.find('Setup_Csound6_') == -1) and (filepath.find('msvc') == -1):
                     targets.add(filepath)
     for target in sorted(targets):
         dependencies.add(target)
@@ -160,3 +181,5 @@ with open('installer/windows/csound_targets_and_dependencies.iss', 'w') as f:
             print 'dependency:', dependency
             line = emit(dependency)
             f.write(line)
+Contact GitHub API Training Shop Blog About
+© 2017 GitHub, Inc. Terms Privacy Security Status Help
