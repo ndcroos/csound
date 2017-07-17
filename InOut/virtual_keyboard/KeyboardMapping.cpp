@@ -32,6 +32,7 @@ static char *my_fgets(char *s, int n, FILE *stream)
     char *a = s;
     if (n <= 1) return NULL;                 /* best of a bad deal */
     do {
+      // gets the next character (an unsigned char)
       int ch = getc(stream);
       if (ch == EOF) {                       /* error or EOF       */
         if (s == a) return NULL;             /* no chars -> leave  */
