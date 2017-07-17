@@ -497,7 +497,11 @@ int init_faustaudio(CSOUND *csound, faustgen *p){
   return OK;
 }
 
+/**
+* pp is a generic pointer type.
+*/
 void *init_faustgen_thread(void *pp){
+  // Access member.
   CSOUND *csound = ((hdata2 *) pp)->csound;
   faustgen *p = ((hdata2 *) pp)->p;
   OPARMS parms;
